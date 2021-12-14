@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    const FlexScheme usedScheme = FlexScheme.rosewood;
+    const usedScheme = FlexScheme.rosewood;
 
     return GetMaterialApp.router(
       builder: (context, widget) => ResponsiveWrapper.builder(
