@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'adapter/presentation/common/scheme/flex_scheme.dart';
 import 'adapter/presentation/routes/app_pages.dart';
 
 void main() {
@@ -33,25 +34,25 @@ class MyApp extends StatelessWidget {
         ],
       ),
       theme: FlexThemeData.light(
-          scheme: usedScheme,
-          appBarElevation: 0.5,
+        scheme: usedScheme,
+        appBarElevation: 0.5,
 
-          /// 폰트
-          fontFamily: GoogleFonts.gamjaFlower().fontFamily
+        /// 폰트
+        fontFamily: GoogleFonts.gamjaFlower().fontFamily,
 
-          /// 커스텀 색상
-          // colors: flexScheme.light,
-          ),
+        /// 커스텀 색상
+        colors: flexScheme.light,
+      ),
       darkTheme: FlexThemeData.dark(
-          scheme: usedScheme,
-          appBarElevation: 2,
+        scheme: usedScheme,
+        appBarElevation: 2,
 
-          /// 폰트
-          fontFamily: GoogleFonts.gamjaFlower().fontFamily
+        /// 폰트
+        fontFamily: GoogleFonts.gamjaFlower().fontFamily,
 
-          /// 커스텀 색상
-          // colors: flexScheme.dark,
-          ),
+        /// 커스텀 색상
+        colors: flexScheme.dark,
+      ),
       themeMode: ThemeMode.system,
       getPages: AppPages.routes,
     );
