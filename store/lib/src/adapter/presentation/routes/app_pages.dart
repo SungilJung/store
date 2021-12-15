@@ -24,7 +24,7 @@ class AppPages {
       children: [
         GetPage(
           name: _Paths.storeRoot,
-          page: () => const StoreRootView(),
+          page: StoreRootView.new,
           children: [
             GetPage(
               name: _Paths.home,

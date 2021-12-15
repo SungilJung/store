@@ -6,7 +6,10 @@ import '../../routes/app_pages.dart';
 import 'controller/store_root_controller.dart';
 
 class StoreRootView extends GetView<StoreRootController> {
-  const StoreRootView({Key? key}) : super(key: key);
+  final GlobalKey<ConvexAppBarState> _appBarKey =
+      GlobalKey<ConvexAppBarState>();
+
+  StoreRootView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +17,7 @@ class StoreRootView extends GetView<StoreRootController> {
       builder: (context, delegate, currentRoute) {
         final currentLocation = currentRoute?.location;
         var currentIndex = getCurrentIndex(currentLocation);
+        _appBarKey.currentState?.animateTo(currentIndex);
 
         return Scaffold(
           body: GetRouterOutlet(
@@ -21,6 +25,7 @@ class StoreRootView extends GetView<StoreRootController> {
             key: Get.nestedKey(Routes.storeRoot),
           ),
           bottomNavigationBar: ConvexAppBar(
+            key: _appBarKey,
             items: [
               TabItem(
                 icon: Icon(Icons.home_outlined),
@@ -57,18 +62,18 @@ class StoreRootView extends GetView<StoreRootController> {
             onTap: (value) {
               switch (value) {
                 case 0:
-                  delegate.toNamed(Routes.home);
+                  delegate.offAndToNamed(Routes.home);
                   break;
                 case 1:
-                  delegate.toNamed(Routes.pbProduct);
+                  delegate.offAndToNamed(Routes.pbProduct);
                   break;
                 case 2:
                   break;
                 case 3:
-                  delegate.toNamed(Routes.map);
+                  delegate.offAndToNamed(Routes.map);
                   break;
                 case 4:
-                  delegate.toNamed(Routes.favorites);
+                  delegate.offAndToNamed(Routes.favorites);
                   break;
                 default:
               }
