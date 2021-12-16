@@ -1,13 +1,14 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../common/logger/logger_utils.dart';
+import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
+import '../../common/custom/bottom_navi/bottom_navi_item.dart';
+import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
 import '../../routes/app_pages.dart';
 
 class StoreRootView extends StatelessWidget {
   StoreRootView({Key? key}) : super(key: key);
-  final GlobalKey<ConvexAppBarState> _appBarKey =
-      GlobalKey<ConvexAppBarState>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,48 +16,52 @@ class StoreRootView extends StatelessWidget {
       builder: (context, delegate, currentRoute) {
         final currentLocation = currentRoute?.location;
         var currentIndex = getCurrentIndex(currentLocation);
-        _appBarKey.currentState?.animateTo(currentIndex);
 
         return Scaffold(
           body: GetRouterOutlet(
             initialRoute: Routes.home,
             key: Get.nestedKey(Routes.storeRoot),
           ),
-          bottomNavigationBar: ConvexAppBar(
-            key: _appBarKey,
+          bottomNavigationBar: CustomBottomBar(
+            currentIndex: currentIndex,
+            iconSize: 26,
+            fab: BottomNaviFAB(
+              icon: Icon(
+                Icons.qr_code,
+                color: Colors.deepOrange,
+                size: 45,
+              ),
+              onFabTap: () {
+                Logger.logNoStack.d('FAB!!!');
+                Get.snackbar(
+                  '바코드',
+                  '바코트 클릭',
+                  duration: Duration(seconds: 1),
+                );
+              },
+            ),
             items: [
-              TabItem(
+              BottomNaviItem(
                 icon: Icon(Icons.home_outlined),
                 activeIcon: Icon(Icons.home),
-                title: '홈',
+                label: '홈',
               ),
-              TabItem(
+              BottomNaviItem(
                 icon: Icon(Icons.camera_rear_outlined),
                 activeIcon: Icon(Icons.camera_rear),
-                title: 'PB상품',
+                label: 'PB 상품',
               ),
-              TabItem(
-                icon: Icon(
-                  Icons.qr_code_rounded,
-                  color: Colors.pink,
-                ),
-                title: '바코드',
+              BottomNaviItem(
+                icon: Icon(Icons.location_on_outlined),
+                activeIcon: Icon(Icons.location_on),
+                label: '지도',
               ),
-              TabItem(
-                icon: Icon(Icons.map_outlined),
-                activeIcon: Icon(Icons.map),
-                title: '지도',
+              BottomNaviItem(
+                icon: Icon(Icons.favorite_border),
+                activeIcon: Icon(Icons.favorite),
+                label: '찜한 상품',
               ),
-              TabItem(
-                  icon: Icon(Icons.favorite_border),
-                  activeIcon: Icon(Icons.favorite),
-                  title: '찜한 상품'),
             ],
-            style: TabStyle.fixedCircle,
-            curveSize: 75,
-            backgroundColor: Colors.white,
-            activeColor: Colors.black,
-            color: Colors.black,
             onTap: (value) {
               switch (value) {
                 case 0:
@@ -66,15 +71,13 @@ class StoreRootView extends StatelessWidget {
                   delegate.offAndToNamed(Routes.pbProduct);
                   break;
                 case 2:
-                  _appBarKey.currentState?.animateTo(currentIndex);
-                  break;
-                case 3:
                   delegate.offAndToNamed(Routes.map);
                   break;
-                case 4:
+                case 3:
                   delegate.offAndToNamed(Routes.favorites);
                   break;
                 default:
+                  break;
               }
             },
           ),
@@ -89,9 +92,9 @@ class StoreRootView extends StatelessWidget {
     if (true == currentLocation?.startsWith(Routes.pbProduct)) {
       index = 1;
     } else if (true == currentLocation?.startsWith(Routes.map)) {
-      index = 3;
+      index = 2;
     } else if (true == currentLocation?.startsWith(Routes.favorites)) {
-      index = 4;
+      index = 3;
     }
     return index;
   }

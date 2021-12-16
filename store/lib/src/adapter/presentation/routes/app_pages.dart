@@ -1,4 +1,3 @@
-import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 
 import '../modules/favorite/bindings/favorite_bindings.dart';
