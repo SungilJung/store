@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../controller/home_controller.dart';
@@ -8,10 +9,18 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.greenAccent,
-      child: Center(
-        child: Text('홈'),
+    return BackButtonListener(
+      onBackButtonPressed: () {
+        if (GetPlatform.isAndroid) {
+          SystemNavigator.pop();
+        }
+        return Future.value(false);
+      },
+      child: Container(
+        color: Colors.greenAccent,
+        child: Center(
+          child: Text('홈'),
+        ),
       ),
     );
   }
