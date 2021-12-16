@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_pages.dart';
-import 'controller/store_root_controller.dart';
 
-class StoreRootView extends GetView<StoreRootController> {
+class StoreRootView extends StatelessWidget {
+  StoreRootView({Key? key}) : super(key: key);
   final GlobalKey<ConvexAppBarState> _appBarKey =
       GlobalKey<ConvexAppBarState>();
-
-  StoreRootView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +66,7 @@ class StoreRootView extends GetView<StoreRootController> {
                   delegate.offAndToNamed(Routes.pbProduct);
                   break;
                 case 2:
+                  _appBarKey.currentState?.animateTo(currentIndex);
                   break;
                 case 3:
                   delegate.offAndToNamed(Routes.map);
