@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 
 import '../modules/favorite/bindings/favorite_bindings.dart';
@@ -27,25 +28,33 @@ class AppPages {
           page: StoreRootView.new,
           children: [
             GetPage(
-                name: _Paths.home,
-                page: () => const HomeView(),
-                binding: HomeBindings(),
-                transition: Transition.fade),
+              name: _Paths.home,
+              page: HomeView.new,
+              binding: HomeBindings(),
+              transition: Transition.fadeIn,
+              transitionDuration: Duration(milliseconds: 500),
+            ),
             GetPage(
-                name: _Paths.pbProduct,
-                page: () => const PbProductView(),
-                binding: PbProductBindings(),
-                transition: Transition.fade),
+              name: _Paths.pbProduct,
+              page: () => const PbProductView(),
+              binding: PbProductBindings(),
+              transition: Transition.fadeIn,
+              transitionDuration: Duration(milliseconds: 500),
+            ),
             GetPage(
-                name: _Paths.map,
-                page: () => const MapView(),
-                binding: MapBindings(),
-                transition: Transition.fade),
+              name: _Paths.map,
+              page: () => const MapView(),
+              binding: MapBindings(),
+              transition: Transition.fadeIn,
+              transitionDuration: Duration(milliseconds: 500),
+            ),
             GetPage(
-                name: _Paths.favorites,
-                page: () => const FavoriteView(),
-                binding: FavoriteBindings(),
-                transition: Transition.fade),
+              name: _Paths.favorites,
+              page: () => const FavoriteView(),
+              binding: FavoriteBindings(),
+              transition: Transition.fadeIn,
+              transitionDuration: Duration(milliseconds: 500),
+            ),
           ],
         ),
       ],
