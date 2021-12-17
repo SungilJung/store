@@ -22,29 +22,29 @@ class BottomNaviFAB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      heightFactor: 0.4,
-      child: Container(
-        height: fabSize.height,
-        width: fabSize.width,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: bgColor,
-          border: Border.all(
-            width: outterBorder,
+    return GestureDetector(
+      onTap: onFabTap,
+      child: Center(
+        heightFactor: 0.4,
+        child: Container(
+          height: fabSize.height,
+          width: fabSize.width,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: bgColor,
+            border: Border.all(
+              width: outterBorder,
+              color: bgColor,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 1.0,
+                spreadRadius: 0.0,
+                offset: Offset(0.5, 2.0), // shadow direction: bottom right
+              )
+            ],
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 1.0,
-              spreadRadius: 0.0,
-              offset: Offset(0.5, 2.0), // shadow direction: bottom right
-            )
-          ],
-        ),
-        child: GestureDetector(
-          onTap: onFabTap,
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,

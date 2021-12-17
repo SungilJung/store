@@ -34,7 +34,7 @@ class CustomBottomBar extends StatefulWidget {
 }
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
-  final double tabWidth = Get.width * 0.2;
+  final double tabWidth = Get.width * 0.15;
 
   int currentIndex = 0;
 
@@ -58,7 +58,15 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     return SafeArea(
       child: Container(
         height: widget.height,
-        color: Theme.of(context).bannerTheme.backgroundColor,
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: Theme.of(context).bannerTheme.backgroundColor,
+          border: Border(
+              top: BorderSide(
+            color: Color(0xFFF0EFEF),
+            width: 0.5,
+          )),
+        ),
         child: Stack(
           children: [
             widget.fab,
