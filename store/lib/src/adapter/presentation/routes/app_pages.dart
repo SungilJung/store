@@ -9,6 +9,7 @@ import '../modules/map/view/map_view.dart';
 import '../modules/pb_product/bindings/pb_product_bindings.dart';
 import '../modules/pb_product/view/pb_product_view.dart';
 import '../modules/root/root_view.dart';
+import '../modules/store_root/bindings/store_root_bindings.dart';
 import '../modules/store_root/store_root_view.dart';
 
 part 'app_routes.dart';
@@ -25,6 +26,7 @@ class AppPages {
         GetPage(
           name: _Paths.storeRoot,
           page: StoreRootView.new,
+          binding: StoreRootBindings(),
           children: [
             GetPage(
               name: _Paths.home,

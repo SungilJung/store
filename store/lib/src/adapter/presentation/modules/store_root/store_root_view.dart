@@ -6,8 +6,9 @@ import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
 import '../../routes/app_pages.dart';
+import 'controller/store_root_controller.dart';
 
-class StoreRootView extends StatelessWidget {
+class StoreRootView extends GetView<StoreRootController> {
   StoreRootView({Key? key}) : super(key: key);
 
   @override
@@ -18,9 +19,23 @@ class StoreRootView extends StatelessWidget {
         var currentIndex = getCurrentIndex(currentLocation);
 
         return Scaffold(
-          body: GetRouterOutlet(
-            initialRoute: Routes.home,
-            key: Get.nestedKey(Routes.storeRoot),
+          body: Stack(
+            children: [
+              GetRouterOutlet(
+                initialRoute: Routes.home,
+                key: Get.nestedKey(Routes.storeRoot),
+              ),
+              _CustomBottomSheet(
+                height: Get.height * 0.8,
+                controller: controller,
+                child: Container(
+                  color: Colors.amber,
+                  child: Center(
+                    child: Text('hi'),
+                  ),
+                ),
+              ),
+            ],
           ),
           bottomNavigationBar: CustomBottomBar(
             currentIndex: currentIndex,
@@ -33,11 +48,7 @@ class StoreRootView extends StatelessWidget {
               ),
               onFabTap: () {
                 Logger.logNoStack.d('FAB!!!');
-                Get.snackbar(
-                  '바코드',
-                  '바코트 클릭',
-                  duration: Duration(seconds: 1),
-                );
+                controller.showBarcode.toggle();
               },
             ),
             items: [
@@ -63,6 +74,8 @@ class StoreRootView extends StatelessWidget {
               ),
             ],
             onTap: (value) {
+              controller.showBarcode(false);
+
               switch (value) {
                 case 0:
                   delegate.offAndToNamed(Routes.home);
@@ -97,5 +110,76 @@ class StoreRootView extends StatelessWidget {
       index = 3;
     }
     return index;
+  }
+}
+
+class _CustomBottomSheet extends StatelessWidget {
+  final StoreRootController controller;
+  final Widget child;
+  final double height;
+
+  const _CustomBottomSheet({
+    Key? key,
+    required this.controller,
+    required this.child,
+    required this.height,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            GestureDetector(
+              onTap: () => controller.showBarcode.toggle(),
+              child: Visibility(
+                visible: controller.showBarcode.value,
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                  width: Get.width,
+                  height: Get.height,
+                ),
+              ),
+            ),
+            AnimatedPositioned(
+              bottom: controller.showBarcode.value ? 0 : -(height),
+              right: 0.0,
+              left: 0.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20.0),
+                    topLeft: Radius.circular(20.0),
+                  ),
+                ),
+                width: Get.width,
+                height: height,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Container(
+                        width: 60,
+                        height: 5,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                      ),
+                    ),
+                    Expanded(child: child),
+                  ],
+                ),
+              ),
+              duration: Duration(milliseconds: 300),
+              curve: Curves.decelerate,
+            ),
+          ],
+        );
+      },
+    );
   }
 }
