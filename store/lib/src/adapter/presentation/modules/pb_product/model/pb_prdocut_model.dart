@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
+import 'logo.dart';
 
 class PbProductModel {
   final int index;
   final String url;
-  final ImageProvider image;
+  final Logo logo;
 
   PbProductModel({
     required this.index,
     required this.url,
-    required this.image,
+    required this.logo,
   });
 }

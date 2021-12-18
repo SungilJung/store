@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../../common/logger/logger_utils.dart';
 import '../controller/pb_product_controller.dart';
@@ -11,26 +12,12 @@ class PbProductView extends GetView<PbProductController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-      appBar: AppBar(
-        title: Text('PB 상품'),
-        shadowColor: Colors.transparent,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            splashColor: Colors.transparent,
-            onPressed: () {
-              Logger.logNoStack.d('search!!');
-            },
-          )
-        ],
-        centerTitle: false,
-      ),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
         children: [
           Container(
             height: Get.height * 0.13,
-            color: Theme.of(context).appBarTheme.backgroundColor,
+            color: Theme.of(context).colorScheme.secondary,
             child: Obx(
               () => Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -41,13 +28,28 @@ class PbProductView extends GetView<PbProductController> {
             ),
           ),
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
-                ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+              child: WebView(
+                initialUrl:
+                    controller.models[controller.selectedIndex.value].url,
+                onWebViewCreated: (webViewController) {
+                  controller.webViewController.complete(webViewController);
+                },
+                onProgress: (progress) {
+                  Logger.logNoStack.d('progress $progress');
+                },
+                onPageStarted: (url) {
+                  Logger.logNoStack.d('onPageStarted url $url');
+                },
+                onWebResourceError: (error) {
+                  Logger.logNoStack
+                      .d('onWebResourceError ${error.description}');
+                },
+                javascriptMode: JavascriptMode.unrestricted,
               ),
             ),
           ),
@@ -57,43 +59,36 @@ class PbProductView extends GetView<PbProductController> {
   }
 
   Widget _createRowItem(BuildContext context, PbProductModel model) {
-    var width = Get.width * 0.15;
-    var height = Get.width * 0.15;
-
     return GestureDetector(
-      onTap: () => controller.selectedIndex(model.index),
+      onTap: () {
+        controller.selectedIndex(model.index);
+        controller.webViewController.future.then(
+          (webController) => webController
+              .loadUrl(controller.models[controller.selectedIndex.value].url),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Stack(
           children: [
-            _circleContainer(
+            _circleAvator(
               Colors.white,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: model.image,
-              ),
+              // image: AssetImage('assetName')
             ),
             Visibility(
                 visible: controller.selectedIndex.value != model.index,
-                child: _circleContainer(Colors.black.withOpacity(0.3))),
+                child: _circleAvator(Colors.black.withOpacity(0.3))),
           ],
         ),
       ),
     );
   }
 
-  Widget _circleContainer(Color bgColor, {DecorationImage? image}) {
-    var width = Get.width * 0.15;
-    var height = Get.width * 0.15;
-
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: bgColor,
-        shape: BoxShape.circle,
-        image: image,
-      ),
+  Widget _circleAvator(Color bgColor, {ImageProvider? image}) {
+    return CircleAvatar(
+      radius: Get.width * 0.07,
+      backgroundColor: bgColor,
+      backgroundImage: image,
     );
   }
 }
