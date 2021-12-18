@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../../common/message/messages.dart';
 
 import '../modules/favorite/bindings/favorite_bindings.dart';
 import '../modules/favorite/view/favorite_view.dart';
@@ -20,15 +21,18 @@ class AppPages {
   static final routes = [
     GetPage(
       name: '/',
+      title: Messages.home,
       page: () => const RootView(),
       participatesInRootNavigator: true,
       children: [
         GetPage(
+          title: Messages.home,
           name: _Paths.storeRoot,
           page: StoreRootView.new,
           binding: StoreRootBindings(),
           children: [
             GetPage(
+              title: Messages.home,
               name: _Paths.home,
               page: HomeView.new,
               binding: HomeBindings(),
@@ -36,6 +40,7 @@ class AppPages {
               transitionDuration: Duration(milliseconds: 500),
             ),
             GetPage(
+              title: Messages.pbProduct,
               name: _Paths.pbProduct,
               page: () => const PbProductView(),
               binding: PbProductBindings(),
@@ -43,6 +48,7 @@ class AppPages {
               transitionDuration: Duration(milliseconds: 500),
             ),
             GetPage(
+              title: Messages.map,
               name: _Paths.map,
               page: () => const MapView(),
               binding: MapBindings(),
@@ -50,6 +56,7 @@ class AppPages {
               transitionDuration: Duration(milliseconds: 500),
             ),
             GetPage(
+              title: Messages.favoriteProduct,
               name: _Paths.favorites,
               page: () => const FavoriteView(),
               binding: FavoriteBindings(),
