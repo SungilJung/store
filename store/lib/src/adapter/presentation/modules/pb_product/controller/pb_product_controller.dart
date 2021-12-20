@@ -21,7 +21,8 @@ class PbProductController extends GetxController {
     ),
     PbProductModel(
       index: 2,
-      url: 'https://www.7-eleven.co.kr/product/presentList.asp',
+      url:
+          'https://m.7-eleven.co.kr:444/product/productList.asp?pTab=5&pCd=&intPageSize=4',
       logo: Logo(''),
     ),
     PbProductModel(
