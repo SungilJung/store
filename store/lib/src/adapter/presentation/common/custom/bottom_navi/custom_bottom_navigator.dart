@@ -14,11 +14,13 @@ class CustomBottomBar extends StatefulWidget {
   final int currentIndex;
   final double iconSize;
   final double labelSize;
+  final Color backgroundColor;
 
   CustomBottomBar({
     Key? key,
     required this.fab,
     required this.items,
+    required this.backgroundColor,
     this.currentIndex = 0,
     this.onTap,
     this.height = 70,
@@ -60,7 +62,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         height: widget.height,
         width: Get.width,
         decoration: BoxDecoration(
-          color: Theme.of(context).bannerTheme.backgroundColor,
+          color: widget.backgroundColor,
           border: Border(
               top: BorderSide(
             color: Color(0xFFF0EFEF),

@@ -9,13 +9,7 @@ class RootView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetRouterOutlet.builder(
       builder: (context, delegate, current) {
-        final title = current?.location;
-
         return Scaffold(
-          appBar: AppBar(
-            title: Text(title ?? ''),
-            centerTitle: true,
-          ),
           body: GetRouterOutlet(
             initialRoute: Routes.storeRoot,
           ),

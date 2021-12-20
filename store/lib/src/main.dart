@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'adapter/presentation/common/scheme/flex_scheme.dart';
 import 'adapter/presentation/routes/app_pages.dart';
 
 void main() {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.gamjaFlower().fontFamily,
 
         /// 커스텀 색상
-        // colors: flexScheme.light,
+        colors: flexScheme.light,
       ),
       darkTheme: FlexThemeData.dark(
         scheme: usedScheme,

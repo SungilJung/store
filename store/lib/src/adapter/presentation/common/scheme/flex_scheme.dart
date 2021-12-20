@@ -5,10 +5,11 @@ const FlexSchemeData flexScheme = FlexSchemeData(
   name: 'Midnight blue',
   description: 'Midnight blue theme, custom definition of all colors',
   light: FlexSchemeColor(
-    primary: Color(0xFF00296B),
+    primary: Colors.white,
     primaryVariant: Color(0xFF2F5C91),
     secondary: Color(0xFFFF7B00),
     secondaryVariant: Color(0xFFFDB100),
+    appBarColor: Colors.white,
   ),
   dark: FlexSchemeColor(
     primary: Color(0xFF6B8BC3),

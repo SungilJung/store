@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/logger/logger_utils.dart';
+import '../../../../common/message/messages.dart';
 import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
@@ -17,8 +18,25 @@ class StoreRootView extends GetView<StoreRootController> {
       builder: (context, delegate, currentRoute) {
         final currentLocation = currentRoute?.location;
         var currentIndex = getCurrentIndex(currentLocation);
+        var title = currentRoute?.currentPage?.title;
 
         return Scaffold(
+          appBar: AppBar(
+            title: Text('$title'),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            shadowColor: Colors.transparent,
+            centerTitle: false,
+            elevation: 0.0,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  Logger.logNoStack.d('search!!');
+                },
+              )
+            ],
+          ),
           body: Stack(
             children: [
               GetRouterOutlet(
@@ -38,6 +56,7 @@ class StoreRootView extends GetView<StoreRootController> {
             ],
           ),
           bottomNavigationBar: CustomBottomBar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
             currentIndex: currentIndex,
             iconSize: 26,
             fab: BottomNaviFAB(
@@ -47,7 +66,6 @@ class StoreRootView extends GetView<StoreRootController> {
                 size: 45,
               ),
               onFabTap: () {
-                Logger.logNoStack.d('FAB!!!');
                 controller.showBarcode.toggle();
               },
             ),
@@ -55,22 +73,22 @@ class StoreRootView extends GetView<StoreRootController> {
               BottomNaviItem(
                 icon: Icon(Icons.home_outlined),
                 activeIcon: Icon(Icons.home),
-                label: '홈',
+                label: Messages.home,
               ),
               BottomNaviItem(
                 icon: Icon(Icons.camera_rear_outlined),
                 activeIcon: Icon(Icons.camera_rear),
-                label: 'PB 상품',
+                label: Messages.pbProduct,
               ),
               BottomNaviItem(
                 icon: Icon(Icons.location_on_outlined),
                 activeIcon: Icon(Icons.location_on),
-                label: '지도',
+                label: Messages.map,
               ),
               BottomNaviItem(
                 icon: Icon(Icons.favorite_border),
                 activeIcon: Icon(Icons.favorite),
-                label: '찜한 상품',
+                label: Messages.favoriteProduct,
               ),
             ],
             onTap: (value) {
