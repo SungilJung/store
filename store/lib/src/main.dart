@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
       theme: FlexThemeData.light(
         scheme: usedScheme,
         appBarElevation: 0.5,
+        appBarStyle: FlexAppBarStyle.material,
 
         /// 폰트
         fontFamily: GoogleFonts.gamjaFlower().fontFamily,

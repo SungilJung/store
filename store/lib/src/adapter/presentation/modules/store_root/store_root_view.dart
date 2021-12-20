@@ -23,7 +23,6 @@ class StoreRootView extends GetView<StoreRootController> {
         return Scaffold(
           appBar: AppBar(
             title: Text('$title'),
-            backgroundColor: Theme.of(context).colorScheme.primary,
             shadowColor: Colors.transparent,
             centerTitle: false,
             elevation: 0.0,
@@ -56,7 +55,7 @@ class StoreRootView extends GetView<StoreRootController> {
             ],
           ),
           bottomNavigationBar: CustomBottomBar(
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.background,
             currentIndex: currentIndex,
             iconSize: 26,
             fab: BottomNaviFAB(
@@ -71,23 +70,47 @@ class StoreRootView extends GetView<StoreRootController> {
             ),
             items: [
               BottomNaviItem(
-                icon: Icon(Icons.home_outlined),
-                activeIcon: Icon(Icons.home),
+                icon: Icon(
+                  Icons.home_outlined,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                activeIcon: Icon(
+                  Icons.home,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 label: Messages.home,
               ),
               BottomNaviItem(
-                icon: Icon(Icons.camera_rear_outlined),
-                activeIcon: Icon(Icons.camera_rear),
+                icon: Icon(
+                  Icons.camera_rear_outlined,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                activeIcon: Icon(
+                  Icons.camera_rear,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 label: Messages.pbProduct,
               ),
               BottomNaviItem(
-                icon: Icon(Icons.location_on_outlined),
-                activeIcon: Icon(Icons.location_on),
+                icon: Icon(
+                  Icons.location_on_outlined,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                activeIcon: Icon(
+                  Icons.location_on,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 label: Messages.map,
               ),
               BottomNaviItem(
-                icon: Icon(Icons.favorite_border),
-                activeIcon: Icon(Icons.favorite),
+                icon: Icon(
+                  Icons.favorite_border,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                activeIcon: Icon(
+                  Icons.favorite,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 label: Messages.favoriteProduct,
               ),
             ],

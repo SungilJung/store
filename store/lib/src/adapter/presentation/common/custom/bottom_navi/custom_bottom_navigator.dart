@@ -65,7 +65,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           color: widget.backgroundColor,
           border: Border(
               top: BorderSide(
-            color: Color(0xFFF0EFEF),
+            color: Theme.of(context).dividerColor,
             width: 0.5,
           )),
         ),
@@ -142,8 +142,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         padding: EdgeInsets.only(bottom: 8.0),
         child: Text(
           widget.items[index].label,
-          style: Theme.of(context).primaryTextTheme.bodyText1!.copyWith(
-              color: Colors.black,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
               fontSize: widget.labelSize,
               fontWeight: currentIndex == index ? FontWeight.bold : null),
         ),
