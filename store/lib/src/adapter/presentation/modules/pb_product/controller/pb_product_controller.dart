@@ -36,7 +36,7 @@ class PbProductController extends GetxController {
   ];
 
   final RxInt selectedIndex = 0.obs;
-  late final WebViewController webViewController;
+  late WebViewController webViewController;
 
   @override
   void onInit() {
