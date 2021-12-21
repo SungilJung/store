@@ -5,6 +5,6 @@ import '../controller/pb_product_controller.dart';
 class PbProductBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(PbProductController.new);
+    Get.put(PbProductController());
   }
 }
