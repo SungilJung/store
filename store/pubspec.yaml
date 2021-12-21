@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  barcode_widget: ^2.0.2
   connectivity_plus: ^2.1.0
   cupertino_icons: ^1.0.2
   effective_dart: ^1.3.2
@@ -34,6 +35,7 @@ dependencies:
   flex_color_scheme: ^4.1.1
   flutter:
     sdk: flutter
+  flutter_keyboard_visibility: ^5.1.0
   get: ^4.6.1
   google_fonts: ^2.1.0
   json_annotation: ^4.4.0
