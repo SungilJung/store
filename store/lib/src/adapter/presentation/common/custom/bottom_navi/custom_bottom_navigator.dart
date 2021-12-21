@@ -47,6 +47,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.currentIndex;
+  }
+
+  @override
   void didUpdateWidget(covariant CustomBottomBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
