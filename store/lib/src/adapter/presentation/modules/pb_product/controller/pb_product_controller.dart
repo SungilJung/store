@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -38,8 +36,7 @@ class PbProductController extends GetxController {
   ];
 
   final RxInt selectedIndex = 0.obs;
-  final Completer<WebViewController> webViewController =
-      Completer<WebViewController>();
+  late final WebViewController webViewController;
 
   @override
   void onInit() {
