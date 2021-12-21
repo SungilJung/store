@@ -11,6 +11,7 @@ import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
 import '../../routes/app_pages.dart';
+import '../../services/bottom_navi_service.dart';
 import '../barcode/widget/barcode_bottom_sheet.dart';
 import '../barcode/widget/mobile_carrier_tab_item.dart';
 import 'controller/store_root_controller.dart';
@@ -23,6 +24,8 @@ class StoreRootView extends GetView<StoreRootController> {
     return GetRouterOutlet.builder(
       builder: (context, delegate, currentRoute) {
         final currentLocation = currentRoute?.location;
+        Get.find<BottomNaviService>().currentLocation(currentLocation);
+
         var currentIndex = getCurrentIndex(currentLocation);
 
         var title = currentRoute?.currentPage?.title;
