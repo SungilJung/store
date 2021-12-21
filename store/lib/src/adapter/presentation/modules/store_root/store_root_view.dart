@@ -1,12 +1,18 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 
+import '../../../../application/barcode/service/Barcode_formatter.dart';
 import '../../../../common/logger/logger_utils.dart';
 import '../../../../common/message/messages.dart';
 import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
 import '../../routes/app_pages.dart';
+import '../barcode/widget/barcode_bottom_sheet.dart';
+import '../barcode/widget/mobile_carrier_tab_item.dart';
 import 'controller/store_root_controller.dart';
 
 class StoreRootView extends GetView<StoreRootController> {
@@ -18,122 +24,232 @@ class StoreRootView extends GetView<StoreRootController> {
       builder: (context, delegate, currentRoute) {
         final currentLocation = currentRoute?.location;
         var currentIndex = getCurrentIndex(currentLocation);
+
         var title = currentRoute?.currentPage?.title;
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('$title'),
-            shadowColor: Colors.transparent,
-            centerTitle: false,
-            elevation: 0.0,
-            actions: [
-              IconButton(
-                icon: Icon(Icons.search),
-                splashColor: Colors.transparent,
-                onPressed: () {
-                  Logger.logNoStack.d('search!!');
-                },
-              )
-            ],
-          ),
-          body: Stack(
-            children: [
-              GetRouterOutlet(
-                initialRoute: Routes.home,
-                key: Get.nestedKey(Routes.storeRoot),
-              ),
-              _CustomBottomSheet(
-                height: Get.height * 0.8,
-                controller: controller,
-                child: Container(
-                  color: Colors.amber,
-                  child: Center(
-                    child: Text('hi'),
+        return KeyboardDismissOnTap(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('$title'),
+              shadowColor: Colors.transparent,
+              centerTitle: false,
+              elevation: 0.0,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.search),
+                  splashColor: Colors.transparent,
+                  onPressed: () {
+                    Logger.logNoStack.d('search!!');
+                  },
+                )
+              ],
+            ),
+            body: Stack(
+              children: [
+                GetRouterOutlet(
+                  initialRoute: Routes.home,
+                ),
+                BarcodeBottomSheet(
+                  height: Get.height * 0.6,
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
+                          child: Text(
+                            Messages.membershipTitle,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                        Obx(
+                          () => Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 60.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: controller.mobileCarriers
+                                      .map(
+                                        (carrier) => MobileCarrierTabItem(
+                                          carrier: carrier,
+                                          width: Get.width * 0.25,
+                                          color: controller
+                                                      .selectedCarrierIndex ==
+                                                  carrier.index
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : Theme.of(context).disabledColor,
+                                          textStyle:
+                                              controller.selectedCarrierIndex ==
+                                                      carrier.index
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold)
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!,
+                                          onTap: (index) {
+                                            controller
+                                                .selectedCarrierIndex(index);
+                                          },
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15.0),
+                                  child: BarcodeWidget(
+                                    height: Get.height * 0.13,
+                                    data: 'data',
+                                    barcode: Barcode.code128(),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      flex: 1,
+                                      child: Text(
+                                        '${controller.selectedCarrierName} ${Messages.membership}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 3,
+                                      child: TextField(
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          BarcodeInputFormatter(),
+                                        ],
+                                        decoration: InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          labelStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary),
+                                          labelText:
+                                              Messages.inputMembershipCode,
+                                          fillColor: Colors.transparent,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          bottomNavigationBar: CustomBottomBar(
-            backgroundColor: Theme.of(context).colorScheme.background,
-            currentIndex: currentIndex,
-            iconSize: 26,
-            fab: BottomNaviFAB(
-              icon: Icon(
-                Icons.qr_code,
-                color: Colors.deepOrange,
-                size: 45,
-              ),
-              onFabTap: () {
-                controller.showBarcode.toggle();
-              },
+              ],
             ),
-            items: [
-              BottomNaviItem(
-                icon: Icon(
-                  Icons.home_outlined,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                activeIcon: Icon(
-                  Icons.home,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                label: Messages.home,
-              ),
-              BottomNaviItem(
-                icon: Icon(
-                  Icons.camera_rear_outlined,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                activeIcon: Icon(
-                  Icons.camera_rear,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                label: Messages.pbProduct,
-              ),
-              BottomNaviItem(
-                icon: Icon(
-                  Icons.location_on_outlined,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                activeIcon: Icon(
-                  Icons.location_on,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                label: Messages.map,
-              ),
-              BottomNaviItem(
-                icon: Icon(
-                  Icons.favorite_border,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                activeIcon: Icon(
-                  Icons.favorite,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                label: Messages.favoriteProduct,
-              ),
-            ],
-            onTap: (value) {
-              controller.showBarcode(false);
+            bottomNavigationBar: Obx(
+              () => Visibility(
+                visible: controller.showBottomNavigator,
+                child: CustomBottomBar(
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  currentIndex: currentIndex,
+                  iconSize: 26,
+                  fab: BottomNaviFAB(
+                    icon: Icon(
+                      Icons.qr_code,
+                      color: Colors.deepOrange,
+                      size: 45,
+                    ),
+                    onFabTap: () {
+                      controller.showBarcode.toggle();
+                    },
+                  ),
+                  items: [
+                    BottomNaviItem(
+                      icon: Icon(
+                        Icons.home_outlined,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      activeIcon: Icon(
+                        Icons.home,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      label: Messages.home,
+                    ),
+                    BottomNaviItem(
+                      icon: Icon(
+                        Icons.camera_rear_outlined,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      activeIcon: Icon(
+                        Icons.camera_rear,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      label: Messages.pbProduct,
+                    ),
+                    BottomNaviItem(
+                      icon: Icon(
+                        Icons.location_on_outlined,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      activeIcon: Icon(
+                        Icons.location_on,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      label: Messages.map,
+                    ),
+                    BottomNaviItem(
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      activeIcon: Icon(
+                        Icons.favorite,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      label: Messages.favoriteProduct,
+                    ),
+                  ],
+                  onTap: (value) {
+                    controller.showBarcode(false);
 
-              switch (value) {
-                case 0:
-                  delegate.offAndToNamed(Routes.home);
-                  break;
-                case 1:
-                  delegate.offAndToNamed(Routes.pbProduct);
-                  break;
-                case 2:
-                  delegate.offAndToNamed(Routes.map);
-                  break;
-                case 3:
-                  delegate.offAndToNamed(Routes.favorites);
-                  break;
-                default:
-                  break;
-              }
-            },
+                    switch (value) {
+                      case 0:
+                        delegate.offAndToNamed(Routes.home);
+                        break;
+                      case 1:
+                        delegate.offAndToNamed(Routes.pbProduct);
+                        break;
+                      case 2:
+                        delegate.offAndToNamed(Routes.map);
+                        break;
+                      case 3:
+                        delegate.offAndToNamed(Routes.favorites);
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                ),
+              ),
+            ),
           ),
         );
       },
@@ -151,76 +267,5 @@ class StoreRootView extends GetView<StoreRootController> {
       index = 3;
     }
     return index;
-  }
-}
-
-class _CustomBottomSheet extends StatelessWidget {
-  final StoreRootController controller;
-  final Widget child;
-  final double height;
-
-  const _CustomBottomSheet({
-    Key? key,
-    required this.controller,
-    required this.child,
-    required this.height,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () {
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            GestureDetector(
-              onTap: () => controller.showBarcode.toggle(),
-              child: Visibility(
-                visible: controller.showBarcode.value,
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                  width: Get.width,
-                  height: Get.height,
-                ),
-              ),
-            ),
-            AnimatedPositioned(
-              bottom: controller.showBarcode.value ? 0 : -(height),
-              right: 0.0,
-              left: 0.0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20.0),
-                    topLeft: Radius.circular(20.0),
-                  ),
-                ),
-                width: Get.width,
-                height: height,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Container(
-                        width: 60,
-                        height: 5,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[400],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                      ),
-                    ),
-                    Expanded(child: child),
-                  ],
-                ),
-              ),
-              duration: Duration(milliseconds: 300),
-              curve: Curves.decelerate,
-            ),
-          ],
-        );
-      },
-    );
   }
 }

@@ -36,7 +36,7 @@ class CustomBottomBar extends StatefulWidget {
 }
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
-  final double tabWidth = Get.width * 0.15;
+  final double tabWidth = Get.width * 0.16;
 
   int currentIndex = 0;
 
@@ -95,7 +95,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                     },
                   ),
                   Container(
-                    width: tabWidth,
+                    width: Get.width * 0.15,
                   ),
                   _TabItem(
                     minWidth: tabWidth,
