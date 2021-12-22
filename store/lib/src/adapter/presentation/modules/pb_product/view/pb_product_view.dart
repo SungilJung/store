@@ -16,12 +16,12 @@ class PbProductView extends GetView<PbProductController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).primaryColor,
       body: Column(
         children: [
           Container(
             height: Get.height * 0.13,
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).primaryColor,
             child: Obx(
               () => Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -32,34 +32,43 @@ class PbProductView extends GetView<PbProductController> {
             ),
           ),
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
               ),
-              child: Obx(
-                () => Opacity(
-                  opacity: Get.find<BottomNaviService>()
-                          .currentLocation
-                          .startsWith(Routes.pbProduct)
-                      ? 1
-                      : 0,
-                  child: WebView(
-                    initialUrl: controller.models[0].url,
-                    onWebViewCreated: (webViewController) {
-                      controller.webViewController = webViewController;
-                    },
-                    onProgress: (progress) {
-                      Logger.logNoStack.d('progress $progress');
-                    },
-                    onPageStarted: (url) {
-                      Logger.logNoStack.d('onPageStarted url $url');
-                    },
-                    onWebResourceError: (error) {
-                      Logger.logNoStack
-                          .d('onWebResourceError ${error.description}');
-                    },
-                    javascriptMode: JavascriptMode.unrestricted,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+                child: Obx(
+                  () => Opacity(
+                    opacity: Get.find<BottomNaviService>()
+                            .currentLocation
+                            .startsWith(Routes.pbProduct)
+                        ? 1
+                        : 0,
+                    child: WebView(
+                      initialUrl: controller.models[0].url,
+                      onWebViewCreated: (webViewController) {
+                        controller.webViewController = webViewController;
+                      },
+                      onProgress: (progress) {
+                        Logger.logNoStack.d('progress $progress');
+                      },
+                      onPageStarted: (url) {
+                        Logger.logNoStack.d('onPageStarted url $url');
+                      },
+                      onWebResourceError: (error) {
+                        Logger.logNoStack
+                            .d('onWebResourceError ${error.description}');
+                      },
+                      javascriptMode: JavascriptMode.unrestricted,
+                    ),
                   ),
                 ),
               ),
