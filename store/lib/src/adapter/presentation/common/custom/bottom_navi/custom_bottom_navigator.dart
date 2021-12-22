@@ -38,12 +38,18 @@ class CustomBottomBar extends StatefulWidget {
 class _CustomBottomBarState extends State<CustomBottomBar> {
   final double tabWidth = Get.width * 0.16;
 
-  int currentIndex = 0;
+  late int currentIndex;
 
   _setBottomBarIndex(index) {
     setState(() {
       currentIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.currentIndex;
   }
 
   @override

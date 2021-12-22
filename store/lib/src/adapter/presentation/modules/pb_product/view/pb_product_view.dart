@@ -3,11 +3,15 @@ import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../../common/logger/logger_utils.dart';
+import '../../../routes/app_pages.dart';
+import '../../../services/bottom_navi_service.dart';
 import '../controller/pb_product_controller.dart';
 import '../model/pb_prdocut_model.dart';
 
 class PbProductView extends GetView<PbProductController> {
-  const PbProductView({Key? key}) : super(key: key);
+  const PbProductView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,23 +37,31 @@ class PbProductView extends GetView<PbProductController> {
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),
               ),
-              child: WebView(
-                initialUrl:
-                    controller.models[controller.selectedIndex.value].url,
-                onWebViewCreated: (webViewController) {
-                  controller.webViewController.complete(webViewController);
-                },
-                onProgress: (progress) {
-                  Logger.logNoStack.d('progress $progress');
-                },
-                onPageStarted: (url) {
-                  Logger.logNoStack.d('onPageStarted url $url');
-                },
-                onWebResourceError: (error) {
-                  Logger.logNoStack
-                      .d('onWebResourceError ${error.description}');
-                },
-                javascriptMode: JavascriptMode.unrestricted,
+              child: Obx(
+                () => Opacity(
+                  opacity: Get.find<BottomNaviService>()
+                          .currentLocation
+                          .startsWith(Routes.pbProduct)
+                      ? 1
+                      : 0,
+                  child: WebView(
+                    initialUrl: controller.models[0].url,
+                    onWebViewCreated: (webViewController) {
+                      controller.webViewController = webViewController;
+                    },
+                    onProgress: (progress) {
+                      Logger.logNoStack.d('progress $progress');
+                    },
+                    onPageStarted: (url) {
+                      Logger.logNoStack.d('onPageStarted url $url');
+                    },
+                    onWebResourceError: (error) {
+                      Logger.logNoStack
+                          .d('onWebResourceError ${error.description}');
+                    },
+                    javascriptMode: JavascriptMode.unrestricted,
+                  ),
+                ),
               ),
             ),
           ),
@@ -62,10 +74,8 @@ class PbProductView extends GetView<PbProductController> {
     return GestureDetector(
       onTap: () {
         controller.selectedIndex(model.index);
-        controller.webViewController.future.then(
-          (webController) => webController
-              .loadUrl(controller.models[controller.selectedIndex.value].url),
-        );
+        controller.webViewController
+            .loadUrl(controller.models[controller.selectedIndex.value].url);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
