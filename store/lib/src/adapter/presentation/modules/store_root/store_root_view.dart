@@ -8,8 +8,8 @@ import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
 import '../../routes/app_pages.dart';
-import '../barcode/view/barcode_view.dart';
 import '../../services/bottom_navi_service.dart';
+import '../barcode/view/barcode_view.dart';
 import '../barcode/widget/barcode_bottom_sheet.dart';
 import 'controller/store_root_controller.dart';
 
