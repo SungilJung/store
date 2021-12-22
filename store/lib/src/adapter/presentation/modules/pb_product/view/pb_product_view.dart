@@ -16,63 +16,69 @@ class PbProductView extends GetView<PbProductController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            height: Get.height * 0.13,
-            color: Theme.of(context).primaryColor,
-            child: Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: controller.models
-                    .map((model) => _createRowItem(context, model))
-                    .toList(),
+          Obx(
+            () => Visibility(
+              visible: Get.find<BottomNaviService>()
+                  .currentLocation
+                  .startsWith(Routes.pbProduct),
+              child: Container(
+                color: Theme.of(context).primaryColor,
+                height: Get.height * 0.2,
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
+          Column(
+            children: [
+              Container(
+                height: Get.height * 0.13,
+                color: Theme.of(context).primaryColor,
+                child: Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: controller.models
+                        .map((model) => _createRowItem(context, model))
+                        .toList(),
+                  ),
                 ),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-                child: Obx(
-                  () => Opacity(
-                    opacity: Get.find<BottomNaviService>()
-                            .currentLocation
-                            .startsWith(Routes.pbProduct)
-                        ? 1
-                        : 0,
-                    child: WebView(
-                      initialUrl: controller.models[0].url,
-                      onWebViewCreated: (webViewController) {
-                        controller.webViewController = webViewController;
-                      },
-                      onProgress: (progress) {
-                        Logger.logNoStack.d('progress $progress');
-                      },
-                      onPageStarted: (url) {
-                        Logger.logNoStack.d('onPageStarted url $url');
-                      },
-                      onWebResourceError: (error) {
-                        Logger.logNoStack
-                            .d('onWebResourceError ${error.description}');
-                      },
-                      javascriptMode: JavascriptMode.unrestricted,
+              Flexible(
+                flex: 3,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: Obx(
+                    () => Opacity(
+                      opacity: Get.find<BottomNaviService>()
+                              .currentLocation
+                              .startsWith(Routes.pbProduct)
+                          ? 1
+                          : 0,
+                      child: WebView(
+                        initialUrl: controller.models[0].url,
+                        onWebViewCreated: (webViewController) {
+                          controller.webViewController = webViewController;
+                        },
+                        onProgress: (progress) {
+                          Logger.logNoStack.d('progress $progress');
+                        },
+                        onPageStarted: (url) {
+                          Logger.logNoStack.d('onPageStarted url $url');
+                        },
+                        onWebResourceError: (error) {
+                          Logger.logNoStack
+                              .d('onWebResourceError ${error.description}');
+                        },
+                        javascriptMode: JavascriptMode.unrestricted,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),
