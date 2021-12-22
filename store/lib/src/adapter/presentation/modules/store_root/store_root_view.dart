@@ -1,19 +1,16 @@
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 
-import '../../../../application/barcode/service/Barcode_formatter.dart';
 import '../../../../common/logger/logger_utils.dart';
 import '../../../../common/message/messages.dart';
 import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
 import '../../routes/app_pages.dart';
+import '../barcode/view/barcode_view.dart';
 import '../../services/bottom_navi_service.dart';
 import '../barcode/widget/barcode_bottom_sheet.dart';
-import '../barcode/widget/mobile_carrier_tab_item.dart';
 import 'controller/store_root_controller.dart';
 
 class StoreRootView extends GetView<StoreRootController> {
@@ -53,117 +50,8 @@ class StoreRootView extends GetView<StoreRootController> {
                   initialRoute: Routes.home,
                 ),
                 BarcodeBottomSheet(
-                  height: Get.height * 0.6,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: Text(
-                            Messages.membershipTitle,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                        Obx(
-                          () => Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 60.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: controller.mobileCarriers
-                                      .map(
-                                        (carrier) => MobileCarrierTabItem(
-                                          carrier: carrier,
-                                          width: Get.width * 0.25,
-                                          color: controller
-                                                      .selectedCarrierIndex ==
-                                                  carrier.index
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                              : Theme.of(context).disabledColor,
-                                          textStyle:
-                                              controller.selectedCarrierIndex ==
-                                                      carrier.index
-                                                  ? Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold)
-                                                  : Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1!,
-                                          onTap: (index) {
-                                            controller
-                                                .selectedCarrierIndex(index);
-                                          },
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 15.0),
-                                  child: BarcodeWidget(
-                                    height: Get.height * 0.13,
-                                    data: 'data',
-                                    barcode: Barcode.code128(),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      flex: 1,
-                                      child: Text(
-                                        '${controller.selectedCarrierName} ${Messages.membership}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 3,
-                                      child: TextField(
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
-                                          BarcodeInputFormatter(),
-                                        ],
-                                        decoration: InputDecoration(
-                                          border: UnderlineInputBorder(),
-                                          labelStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1!
-                                              .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary),
-                                          labelText:
-                                              Messages.inputMembershipCode,
-                                          fillColor: Colors.transparent,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 8.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  height: Get.height * 0.55,
+                  child: BarcodeView(),
                 ),
               ],
             ),

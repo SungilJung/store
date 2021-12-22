@@ -37,6 +37,7 @@ dependencies:
     sdk: flutter
   flutter_keyboard_visibility: ^5.1.0
   get: ^4.6.1
+  get_storage: ^2.0.3
   google_fonts: ^2.1.0
   json_annotation: ^4.4.0
   logger: ^1.1.0
