@@ -107,7 +107,9 @@ class BarcodeView extends GetView<BarcodeService> {
                                       color: Theme.of(context)
                                           .colorScheme
                                           .primary),
-                              labelText: Messages.inputMembershipCode,
+                              labelText: barcode.val == barcode.defaultValue
+                                  ? Messages.inputMembershipCode
+                                  : null,
                               fillColor: Colors.transparent,
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 8.0),
