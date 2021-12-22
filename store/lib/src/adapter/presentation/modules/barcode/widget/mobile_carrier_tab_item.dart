@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/mobile_carrier.dart';
+import '../model/mobile_carrier_type.dart';
 
 class MobileCarrierTabItem extends StatelessWidget {
   final MobileCarrier carrier;
@@ -41,7 +42,7 @@ class MobileCarrierTabItem extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            carrier.name,
+            '${carrier.type.name}',
             style: textStyle.copyWith(color: color),
           ),
         ),
