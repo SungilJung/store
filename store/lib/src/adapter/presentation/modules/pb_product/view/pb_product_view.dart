@@ -96,10 +96,11 @@ class PbProductView extends GetView<PbProductController> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Stack(
           children: [
-            _circleAvator(
-              Colors.white,
-              // image: AssetImage('assetName')
-            ),
+            _circleAvator(Colors.white,
+                image: Image.asset(
+                  model.logo.path,
+                  fit: BoxFit.cover,
+                )),
             Visibility(
                 visible: controller.selectedIndex.value != model.index,
                 child: _circleAvator(Colors.black.withOpacity(0.3))),
@@ -109,11 +110,11 @@ class PbProductView extends GetView<PbProductController> {
     );
   }
 
-  Widget _circleAvator(Color bgColor, {ImageProvider? image}) {
+  Widget _circleAvator(Color bgColor, {Widget? image}) {
     return CircleAvatar(
       radius: Get.width * 0.07,
       backgroundColor: bgColor,
-      backgroundImage: image,
+      child: image,
     );
   }
 }
