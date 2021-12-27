@@ -64,7 +64,6 @@ class MapView extends GetView<MapController> {
                     ),
                     style: TextButton.styleFrom(
                       shape: GetPlatform.isAndroid ? null : CircleBorder(),
-                      primary: Colors.grey[300],
                     ),
                     onPressed: () {
                       Logger.logNoStack.d('touch');
