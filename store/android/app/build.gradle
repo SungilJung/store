@@ -23,6 +23,8 @@ if (flutterVersionName == null) {
 
 def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion')
 if (flutterMinSdkVersion == null) {
+    throw new GradleException("Could not read local.properties file.")
+
     flutterMinSdkVersion = '20'
 }
 
@@ -53,6 +55,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [mapsApiKey: localProperties.getProperty('google.map.api')]
     }
 
     buildTypes {
