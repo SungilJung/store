@@ -92,14 +92,19 @@ class PbProductView extends GetView<PbProductController> {
         controller.webViewController
             .loadUrl(controller.models[controller.selectedIndex.value].url);
       },
-      child: Padding(
+      child: Container(
+        height: context.isTablet ? Get.height * 0.08 : null,
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Stack(
           children: [
-            _circleAvator(
-              Colors.white,
-              // image: AssetImage('assetName')
-            ),
+            _circleAvator(Colors.white,
+                image: Image.asset(
+                  model.logo.path,
+                  fit: BoxFit.cover,
+                  isAntiAlias: true,
+                  filterQuality: FilterQuality.high,
+                  scale: context.isTablet ? 0.5 : 1,
+                )),
             Visibility(
                 visible: controller.selectedIndex.value != model.index,
                 child: _circleAvator(Colors.black.withOpacity(0.3))),
@@ -109,11 +114,11 @@ class PbProductView extends GetView<PbProductController> {
     );
   }
 
-  Widget _circleAvator(Color bgColor, {ImageProvider? image}) {
+  Widget _circleAvator(Color bgColor, {Widget? image}) {
     return CircleAvatar(
       radius: Get.width * 0.07,
       backgroundColor: bgColor,
-      backgroundImage: image,
+      child: image,
     );
   }
 }
