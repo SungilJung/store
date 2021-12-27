@@ -92,7 +92,8 @@ class PbProductView extends GetView<PbProductController> {
         controller.webViewController
             .loadUrl(controller.models[controller.selectedIndex.value].url);
       },
-      child: Padding(
+      child: Container(
+        height: context.isTablet ? Get.height * 0.08 : null,
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Stack(
           children: [
@@ -100,6 +101,9 @@ class PbProductView extends GetView<PbProductController> {
                 image: Image.asset(
                   model.logo.path,
                   fit: BoxFit.cover,
+                  isAntiAlias: true,
+                  filterQuality: FilterQuality.high,
+                  scale: context.isTablet ? 0.5 : 1,
                 )),
             Visibility(
                 visible: controller.selectedIndex.value != model.index,
