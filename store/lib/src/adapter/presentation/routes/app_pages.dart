@@ -1,13 +1,12 @@
 import 'package:get/get.dart';
-import '../../../common/message/messages.dart';
 
+import '../../../common/message/messages.dart';
 import '../modules/favorite/bindings/favorite_bindings.dart';
 import '../modules/favorite/view/favorite_view.dart';
 import '../modules/home/bindings/home_bindings.dart';
 import '../modules/home/view/home_view.dart';
 import '../modules/map/bindings/map_bindings.dart';
 import '../modules/map/view/map_view.dart';
-import '../modules/pb_product/bindings/pb_product_bindings.dart';
 import '../modules/pb_product/view/pb_product_view.dart';
 import '../modules/root/root_view.dart';
 import '../modules/store_root/bindings/store_root_bindings.dart';
@@ -43,7 +42,6 @@ class AppPages {
               title: Messages.pbProduct,
               name: _Paths.pbProduct,
               page: () => const PbProductView(),
-              binding: PbProductBindings(),
               transition: Transition.fadeIn,
               transitionDuration: Duration(milliseconds: 500),
             ),
