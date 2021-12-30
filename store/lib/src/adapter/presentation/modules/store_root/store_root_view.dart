@@ -11,6 +11,7 @@ import '../../routes/app_pages.dart';
 import '../../services/bottom_navi_service.dart';
 import '../barcode/view/barcode_view.dart';
 import '../barcode/widget/barcode_bottom_sheet.dart';
+import '../pb_product/widget/pb_product_category_widget.dart';
 import 'controller/store_root_controller.dart';
 
 class StoreRootView extends GetView<StoreRootController> {
@@ -32,6 +33,9 @@ class StoreRootView extends GetView<StoreRootController> {
             appBar: AppBar(
               title: Text('$title'),
               shadowColor: Colors.transparent,
+              backgroundColor: Routes.pbProduct == currentLocation
+                  ? Theme.of(context).primaryColor
+                  : null,
               centerTitle: false,
               elevation: 0.0,
               actions: [
@@ -43,6 +47,18 @@ class StoreRootView extends GetView<StoreRootController> {
                   },
                 )
               ],
+              bottom: Routes.pbProduct == currentLocation
+                  ? PreferredSize(
+                      preferredSize: Size(Get.width, Get.height * 0.08),
+                      child: Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 14.0),
+                          child: PbProductCategoryWidget(),
+                        ),
+                      ),
+                    )
+                  : null,
             ),
             body: Stack(
               children: [

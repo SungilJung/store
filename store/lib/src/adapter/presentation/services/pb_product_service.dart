@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../model/logo.dart';
-import '../model/pb_prdocut_model.dart';
+import '../modules/pb_product/model/logo.dart';
+import '../modules/pb_product/model/pb_prdocut_model.dart';
 
-class PbProductController extends GetxController {
+class PbProductSerivce extends GetxService {
   final String replaceProtocolStript =
       '\$(document).ready(function() { \$("img").each(function() { var i = \$(this).attr("src"); var n = i.replace("http://", "https://"); \$(this).attr("src", function() { return n; }) }) });';
 

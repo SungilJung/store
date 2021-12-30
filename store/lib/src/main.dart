@@ -9,6 +9,7 @@ import 'adapter/presentation/common/scheme/flex_scheme.dart';
 import 'adapter/presentation/routes/app_pages.dart';
 import 'adapter/presentation/services/barcode_service.dart';
 import 'adapter/presentation/services/bottom_navi_service.dart';
+import 'adapter/presentation/services/pb_product_service.dart';
 
 void main() async {
   await GetStorage.init();
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         () {
           Get.put(BarcodeService());
           Get.put(BottomNaviService());
+          Get.put(PbProductSerivce());
         },
       ),
       theme: FlexThemeData.light(
