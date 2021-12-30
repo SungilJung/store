@@ -5,6 +5,11 @@ import '../model/logo.dart';
 import '../model/pb_prdocut_model.dart';
 
 class PbProductController extends GetxController {
+  final String replaceProtocolStript =
+      '\$(document).ready(function() { \$("img").each(function() { var i = \$(this).attr("src"); var n = i.replace("http://", "https://"); \$(this).attr("src", function() { return n; }) }) });';
+
+  final String sevenElevenBaseUrl = 'https://m.7-eleven';
+
   final List<PbProductModel> models = [
     PbProductModel(
       index: 0,
