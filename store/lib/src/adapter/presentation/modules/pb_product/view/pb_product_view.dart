@@ -63,7 +63,16 @@ class PbProductView extends GetView<PbProductController> {
                           controller.webViewController = webViewController;
                         },
                         onProgress: (progress) {
-                          Logger.logNoStack.d('progress $progress');
+                          if (progress == 100 &&
+                              GetPlatform.isAndroid &&
+                              controller
+                                  .models[controller.selectedIndex.value].url
+                                  .startsWith(controller.sevenElevenBaseUrl)) {
+                            Future.delayed(Duration(milliseconds: 300), () {
+                              controller.webViewController.runJavascript(
+                                  controller.replaceProtocolStript);
+                            });
+                          }
                         },
                         onPageStarted: (url) {
                           Logger.logNoStack.d('onPageStarted url $url');
