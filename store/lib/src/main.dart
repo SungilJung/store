@@ -6,11 +6,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'adapter/presentation/common/scheme/flex_scheme.dart';
-import 'adapter/presentation/routes/app_pages.dart';
-import 'adapter/presentation/services/barcode_service.dart';
-import 'adapter/presentation/services/bottom_navi_service.dart';
-import 'adapter/presentation/services/pb_product_service.dart';
+import 'adapters/presentation/common/scheme/flex_scheme.dart';
+import 'adapters/presentation/routes/app_pages.dart';
+import 'adapters/presentation/services/barcode_service.dart';
+import 'adapters/presentation/services/bottom_navi_service.dart';
+import 'adapters/presentation/services/pb_product_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
