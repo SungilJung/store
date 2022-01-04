@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../../../../../application/barcode/service/Barcode_formatter.dart';
+import '../../../../../applications/barcode/application/service/Barcode_formatter.dart';
 import '../../../../../common/message/messages.dart';
 import '../../../services/barcode_service.dart';
 import '../widget/mobile_carrier_tab_item.dart';
