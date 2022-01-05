@@ -1,11 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../firebase_options.dart';
 import 'adapters/presentation/common/scheme/flex_scheme.dart';
 import 'adapters/presentation/routes/app_pages.dart';
 import 'adapters/presentation/services/barcode_service.dart';
@@ -14,10 +17,18 @@ import 'adapters/presentation/services/pb_product_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  await dotenv.load(fileName: ".env");
+
   await GetStorage.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }

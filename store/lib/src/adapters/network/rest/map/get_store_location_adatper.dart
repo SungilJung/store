@@ -31,13 +31,9 @@ abstract class GetStoreLocationAdapter
 
   @GET(
       '/v2/local/search/category.json?category_group_code=CS2&page=1&sort=distance&size=15')
-  @Headers(<String, dynamic>{
-    'Authorization': 'KakaoAK f47aa54d65d00008c95db4f219a3d7a9'
-  })
   @override
   Future<ValueWrapper<List<StoreLocationModel>>> getStoreLocations(
-    @Query("x") double x,
-    @Query("y") double y, {
-    @Query('radius') int radius = 1000,
-  });
+      @Query("x") double x, @Query("y") double y,
+      {@Query('radius') int radius = 1000,
+      @Header('Authorization') required String apiKey});
 }
