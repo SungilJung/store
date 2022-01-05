@@ -19,9 +19,6 @@ class DefaultFirebaseOptions {
   DefaultFirebaseOptions._();
 
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
     // ignore: missing_enum_constant_in_switch
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -39,16 +36,6 @@ class DefaultFirebaseOptions {
       'DefaultFirebaseOptions are not supported for this platform.',
     );
   }
-
-  static final FirebaseOptions web = FirebaseOptions(
-    apiKey: dotenv.env['web_apiKey']!,
-    appId: dotenv.env['web_appId']!,
-    messagingSenderId: dotenv.env['web_messagingSenderId']!,
-    projectId: dotenv.env['web_projectId']!,
-    authDomain: dotenv.env['web_authDomain']!,
-    storageBucket: dotenv.env['web_storageBucket']!,
-    measurementId: dotenv.env['web_measurementId']!,
-  );
 
   static final FirebaseOptions android = FirebaseOptions(
     apiKey: dotenv.env['android_apiKey']!,
