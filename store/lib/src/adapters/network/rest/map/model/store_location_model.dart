@@ -1,16 +1,18 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../../../applications/map/domain/store_location.dart';
 import '../../../../../applications/map/domain/store_marker.dart';
 import '../../../../../applications/map/domain/store_type.dart'
     show StoreType, StoreTypeExtension;
+import '../util/coordinates_util.dart';
 
 class StoreLocationModel extends StoreLocation {
   StoreLocationModel({
     required String categoryName,
     required double x,
     required double y,
-  }) : super(latLng: LatLng(y, x), storeMarker: _convert(categoryName));
+  }) : super(
+            latLng: CoordinatesUtil.transformKakaoToGoogle(
+                longitude: y, latitude: x),
+            storeMarker: _convert(categoryName));
 
   static StoreMarker? _convert(String categoryName) {
     var name =
