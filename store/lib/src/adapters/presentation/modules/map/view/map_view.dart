@@ -1,12 +1,15 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../../../common/logger/logger_utils.dart';
+import '../../../../../common/message/messages.dart';
 import '../controller/map_controller.dart';
 
 class MapView extends GetView<MapController> {
+  final double _defaultZoom = 17;
+
   const MapView({Key? key}) : super(key: key);
 
   @override
@@ -16,7 +19,8 @@ class MapView extends GetView<MapController> {
         return Stack(
           fit: StackFit.expand,
           children: [
-            if (!controller.isLoadedLocationData)
+            if (controller.enableService.value &&
+                !controller.isLoadedLocationData)
               Container(
                 child: Center(
                   child: SpinKitChasingDots(
@@ -28,49 +32,35 @@ class MapView extends GetView<MapController> {
               GoogleMap(
                 initialCameraPosition: CameraPosition(
                   target: controller.cameraPosition.value,
-                  zoom: controller.defaultZoom,
+                  zoom: _defaultZoom,
                 ),
                 myLocationEnabled: true,
                 onMapCreated: (mapController) =>
                     controller.onMapCreated(mapController),
+                markers: controller.mapMarkers,
               ),
-            if (controller.isLoadedLocationData)
-              Positioned(
-                top: 0,
-                right: GetPlatform.isAndroid ? 50 : 0,
+            Visibility(
+                visible: !controller.enableService.value,
                 child: Container(
-                  margin: EdgeInsets.only(top: 10, right: 10),
-                  width: 40 * (GetPlatform.isAndroid ? 1 : 1.5),
-                  height: 40 * (GetPlatform.isAndroid ? 1 : 1.5),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.8),
-                    shape: GetPlatform.isAndroid
-                        ? BoxShape.rectangle
-                        : BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey[400]!.withOpacity(0.4),
-                        blurRadius: 0.5,
-                        spreadRadius: 0.0,
-                        offset:
-                            Offset(0.5, 2.0), // shadow direction: bottom right
-                      )
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          Messages.locationServiceError,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headline6,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      OutlinedButton(
+                        onPressed: AppSettings.openLocationSettings,
+                        child: Text(Messages.openSettings),
+                      ),
                     ],
                   ),
-                  child: TextButton(
-                    child: Icon(
-                      Icons.store,
-                      color: Colors.grey[700],
-                    ),
-                    style: TextButton.styleFrom(
-                      shape: GetPlatform.isAndroid ? null : CircleBorder(),
-                    ),
-                    onPressed: () {
-                      Logger.logNoStack.d('touch');
-                    },
-                  ),
-                ),
-              ),
+                ))
           ],
         );
       },

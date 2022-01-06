@@ -6,7 +6,7 @@ import '../../../../applications/map/application/port/out/get_remote_store_locat
 import '../../../../common/wrapper/value_wrapper.dart';
 import 'model/store_location_model.dart';
 
-part 'get_store_location_adatper.g.dart';
+part 'remote_store_location_adatper.g.dart';
 
 ValueWrapper<T> deserializeValueWrapper<T extends List<StoreLocationModel>>(
     Map<String, dynamic> json) {
@@ -24,10 +24,10 @@ ValueWrapper<T> deserializeValueWrapper<T extends List<StoreLocationModel>>(
   baseUrl: 'https://dapi.kakao.com',
   parser: Parser.FlutterCompute,
 )
-abstract class GetStoreLocationAdapter
+abstract class RemoteStoreLocationAdapter
     with GetRemoteStoreLocationPort<StoreLocationModel> {
-  factory GetStoreLocationAdapter(Dio dio, {String? baseUrl}) =
-      _GetStoreLocationAdapter;
+  factory RemoteStoreLocationAdapter(Dio dio, {String? baseUrl}) =
+      _RemoteStoreLocationAdapter;
 
   @GET(
       '/v2/local/search/category.json?category_group_code=CS2&page=1&sort=distance&size=15')

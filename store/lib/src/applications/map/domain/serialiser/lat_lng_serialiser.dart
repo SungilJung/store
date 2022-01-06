@@ -6,7 +6,7 @@ class LatLngSerialiser extends JsonConverter<LatLng, Map<String, dynamic>> {
 
   @override
   LatLng fromJson(Map<String, dynamic> json) {
-    return LatLng.fromJson(json)!;
+    return LatLng(json['latitude'], json['longitude']);
   }
 
   @override
