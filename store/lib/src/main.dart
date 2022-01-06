@@ -1,23 +1,35 @@
+import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'adapter/presentation/common/scheme/flex_scheme.dart';
-import 'adapter/presentation/routes/app_pages.dart';
-import 'adapter/presentation/services/barcode_service.dart';
-import 'adapter/presentation/services/bottom_navi_service.dart';
-import 'adapter/presentation/services/pb_product_service.dart';
+import '../firebase_options.dart';
+import 'adapters/presentation/common/scheme/flex_scheme.dart';
+import 'adapters/presentation/routes/app_pages.dart';
+import 'adapters/presentation/services/barcode_service.dart';
+import 'adapters/presentation/services/bottom_navi_service.dart';
+import 'adapters/presentation/services/pb_product_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  await dotenv.load(fileName: ".env");
+
   await GetStorage.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }
@@ -49,6 +61,7 @@ class MyApp extends StatelessWidget {
           Get.put(BarcodeService());
           Get.put(BottomNaviService());
           Get.put(PbProductSerivce());
+          Get.put(Dio(), permanent: true);
         },
       ),
       theme: FlexThemeData.light(
