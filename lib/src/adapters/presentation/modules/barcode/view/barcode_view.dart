@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../../../../../applications/barcode/application/service/Barcode_formatter.dart';
 import '../../../../../common/message/messages.dart';
 import '../../../services/barcode_service.dart';
+import '../service/barcode_formatter.dart';
 import '../widget/mobile_carrier_tab_item.dart';
 
 class BarcodeView extends GetView<BarcodeService> {
