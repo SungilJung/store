@@ -10,10 +10,10 @@ import 'package:location/location.dart';
 import '../../../../../applications/map/application/port/in/get_store_location_query.dart';
 import '../../../../../applications/map/application/service/get_store_location_service.dart';
 import '../../../../../applications/map/domain/store_location.dart';
-import '../../../../../common/message/messages.dart';
 import '../../../../network/rest/map/remote_store_location_adatper.dart';
 import '../../../../persistance/cached_coordinates_adapter.dart';
 import '../../../../persistance/cached_store_location_adapter.dart';
+import '../../../common/message/messages.dart';
 
 class MapController extends SuperController {
   static const double initLatitude = 0;

@@ -4,7 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../../../common/message/messages.dart';
+import '../../../common/message/messages.dart';
 import '../controller/map_controller.dart';
 
 class MapView extends GetView<MapController> {

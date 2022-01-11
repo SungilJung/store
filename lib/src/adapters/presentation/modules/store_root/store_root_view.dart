@@ -3,10 +3,10 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/logger/logger_utils.dart';
-import '../../../../common/message/messages.dart';
 import '../../common/custom/bottom_navi/bottom_navi_fab.dart';
 import '../../common/custom/bottom_navi/bottom_navi_item.dart';
 import '../../common/custom/bottom_navi/custom_bottom_navigator.dart';
+import '../../common/message/messages.dart';
 import '../../routes/app_pages.dart';
 import '../../services/bottom_navi_service.dart';
 import '../barcode/view/barcode_view.dart';

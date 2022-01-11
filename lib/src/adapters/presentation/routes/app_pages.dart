@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../common/message/messages.dart';
+import '../common/message/messages.dart';
 import '../modules/favorite/bindings/favorite_bindings.dart';
 import '../modules/favorite/view/favorite_view.dart';
 import '../modules/home/bindings/home_bindings.dart';
